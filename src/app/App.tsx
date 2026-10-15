@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router'
+import { NavLink, useLocation } from 'react-router'
 import {
   Activity,
   ArrowDownUp,
@@ -7,12 +7,12 @@ import {
   Box,
   CalendarDays,
   Check,
+  ChevronLeft,
   ChevronRight,
   CreditCard,
   FileBarChart,
   LayoutDashboard,
   Menu,
-  MoreHorizontal,
   Settings as SettingsIcon,
   Users,
   X,
@@ -39,8 +39,8 @@ const navItems = [
 ]
 
 function AppShell() {
-  const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [notificationOpen, setNotificationOpen] = useState(false)
   const [updatesSeen, setUpdatesSeen] = useState(false)
   const [profile, setProfile] = useState<Preferences>(readPreferences)
@@ -51,23 +51,35 @@ function AppShell() {
   const activeNav = navItems.find((item) => location.pathname === item.path)
 
   return (
-    <div className={`app-shell${compact ? ' compact-mode' : ''}`}>
+    <div className={`app-shell${compact ? ' compact-mode' : ''}${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
       {mobileOpen && <button className="mobile-scrim" aria-label="Close navigation" type="button" onClick={() => setMobileOpen(false)} />}
       <aside className={`sidebar${mobileOpen ? ' sidebar-open' : ''}`}>
-        <NavLink to="/dashboard" className="brand-lockup" aria-label="PulseBoard overview">
-          <span className="brand-mark"><Activity size={19} strokeWidth={2.4} /></span>
-          <span className="brand-name">pulse<span>board</span></span>
-        </NavLink>
+        <div className="sidebar-header">
+          <NavLink to="/dashboard" className="brand-lockup" aria-label="PulseBoard overview">
+            <span className="brand-mark"><Activity size={19} strokeWidth={2.4} /></span>
+            <span className="brand-name">pulse<span>board</span></span>
+          </NavLink>
+        </div>
         <div className="nav-section-label">WORKSPACE</div>
         <nav className="primary-nav" aria-label="Main navigation">
           {navItems.map(({ label, path, icon: Icon }) => (
-            <NavLink key={path} to={path} onClick={() => setMobileOpen(false)} className={({ isActive }) => `nav-item${isActive ? ' nav-item-active' : ''}`} aria-current={location.pathname === path ? 'page' : undefined}>
+            <NavLink key={path} to={path} onClick={() => setMobileOpen(false)} className={({ isActive }) => `nav-item${isActive ? ' nav-item-active' : ''}`} aria-label={label} title={sidebarCollapsed ? label : undefined} aria-current={location.pathname === path ? 'page' : undefined}>
               <Icon size={17} strokeWidth={1.8} /><span>{label}</span>{label === 'Reports' && <span className="nav-new">NEW</span>}
             </NavLink>
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <div className="sidebar-user"><span className="avatar avatar-2">{initials(profile.name)}</span><span><strong>{profile.name}</strong><small>{profile.email}</small></span><button className="icon-button" type="button" aria-label="Open settings" onClick={() => { setMobileOpen(false); navigate('/settings') }}><MoreHorizontal size={17} /></button></div>
+          <button
+            type="button"
+            className="sidebar-toggle"
+            aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-expanded={!sidebarCollapsed}
+            title={sidebarCollapsed ? 'Expand sidebar' : undefined}
+            onClick={() => setSidebarCollapsed((collapsed) => !collapsed)}
+          >
+            {sidebarCollapsed ? <ChevronRight size={17} /> : <ChevronLeft size={17} />}
+            <span>{sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}</span>
+          </button>
         </div>
       </aside>
       <div className="main-column">
@@ -90,7 +102,10 @@ function AppShell() {
               }}
             />
             <button type="button" className={`icon-button notification-trigger${notificationOpen ? ' active' : ''}`} aria-label="Notifications and help" aria-expanded={notificationOpen} onClick={() => { setNotificationOpen((value) => !value); setUpdatesSeen(true) }}><Bell size={17} />{!updatesSeen && <i />}</button>
-            <span className="avatar avatar-small avatar-2">{initials(profile.name)}</span>
+            <div className="topbar-profile" aria-label={`Signed in as ${profile.name}`}>
+              <span className="avatar avatar-2">{initials(profile.name)}</span>
+              <span className="topbar-profile-details"><strong>{profile.name}</strong><small>{profile.email}</small></span>
+            </div>
           </div>
           {notificationOpen && <div className="notification-popover"><div className="popover-head"><strong>Workspace updates</strong><button type="button" className="icon-button" aria-label="Close updates" onClick={() => setNotificationOpen(false)}><X size={15} /></button></div><p><span className="notification-dot" />Your demo workspace is ready to explore.</p><p><span className="notification-dot muted" />Metrics use fictional sample data.</p><button type="button" className="text-link" onClick={() => setNotificationOpen(false)}>Got it <Check size={14} /></button></div>}
         </header>

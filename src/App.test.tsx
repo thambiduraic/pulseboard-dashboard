@@ -10,13 +10,35 @@ afterEach(() => {
 })
 
 describe('PulseBoard application', () => {
-  it('keeps the sidebar focused on navigation and account controls', () => {
+  it('shows the profile in the top bar and keeps settings in navigation', () => {
     render(<App />)
 
     expect(screen.queryByText('About this demo')).toBeNull()
     expect(screen.queryByText('Northstar Studio')).toBeNull()
     expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeTruthy()
-    expect(screen.getByRole('button', { name: 'Open settings' })).toBeTruthy()
+    expect(screen.getByText('alex@northstar.io')).toBeTruthy()
+    expect(screen.getByLabelText('Signed in as Alex Morgan')).toBeTruthy()
+    expect(document.querySelector('.sidebar .sidebar-user')).toBeNull()
+    expect(within(screen.getByRole('navigation', { name: 'Main navigation' })).getByRole('link', { name: 'Settings' })).toBeTruthy()
+  })
+
+  it('collapses and expands the desktop sidebar while keeping navigation accessible', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    const sidebar = document.querySelector('.app-shell')
+    const navigation = screen.getByRole('navigation', { name: 'Main navigation' })
+    await user.click(screen.getByRole('button', { name: 'Collapse sidebar' }))
+
+    expect(sidebar?.classList.contains('sidebar-collapsed')).toBe(true)
+    expect(screen.getByRole('button', { name: 'Expand sidebar' }).getAttribute('aria-expanded')).toBe('false')
+    expect(within(navigation).getByRole('link', { name: 'Overview' })).toBeTruthy()
+    expect(within(navigation).getByRole('link', { name: 'Settings' })).toBeTruthy()
+
+    await user.click(screen.getByRole('button', { name: 'Expand sidebar' }))
+
+    expect(sidebar?.classList.contains('sidebar-collapsed')).toBe(false)
+    expect(screen.getByRole('button', { name: 'Collapse sidebar' }).getAttribute('aria-expanded')).toBe('true')
   })
 
   it('navigates between workspace pages without reloading', async () => {
