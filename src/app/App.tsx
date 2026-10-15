@@ -3,7 +3,6 @@ import { NavLink, useLocation, useNavigate } from 'react-router'
 import {
   Activity,
   ArrowDownUp,
-  ArrowRight,
   Bell,
   Box,
   CalendarDays,
@@ -15,7 +14,6 @@ import {
   Menu,
   MoreHorizontal,
   Settings as SettingsIcon,
-  Sparkles,
   Users,
   X,
 } from 'lucide-react'
@@ -60,10 +58,6 @@ function AppShell() {
           <span className="brand-mark"><Activity size={19} strokeWidth={2.4} /></span>
           <span className="brand-name">pulse<span>board</span></span>
         </NavLink>
-        <div className="workspace-switcher">
-          <span className="workspace-avatar">{initials(profile.workspace)}</span>
-          <span><strong>{profile.workspace}</strong><small>Free workspace</small></span>
-        </div>
         <div className="nav-section-label">WORKSPACE</div>
         <nav className="primary-nav" aria-label="Main navigation">
           {navItems.map(({ label, path, icon: Icon }) => (
@@ -73,7 +67,6 @@ function AppShell() {
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <div className="help-card"><span><Sparkles size={16} /></span><strong>About this demo</strong><p>Explore a sample analytics workspace powered by fictional records.</p><button type="button" onClick={() => setNotificationOpen(true)}>View workspace notes <ArrowRight size={13} /></button></div>
           <div className="sidebar-user"><span className="avatar avatar-2">{initials(profile.name)}</span><span><strong>{profile.name}</strong><small>{profile.email}</small></span><button className="icon-button" type="button" aria-label="Open settings" onClick={() => { setMobileOpen(false); navigate('/settings') }}><MoreHorizontal size={17} /></button></div>
         </div>
       </aside>

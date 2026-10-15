@@ -44,13 +44,7 @@ a { color: inherit; }
 .brand-mark { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: var(--brand); color: white; }
 .brand-name { font-size: 19px; font-weight: 680; letter-spacing: -.75px; }
 .brand-name span { color: #a9a8bc; font-weight: 460; }
-.workspace-switcher { display: flex; align-items: center; gap: 10px; margin: 30px 0 26px; padding: 10px 9px; border: 1px solid #343548; border-radius: 9px; background: #202133; }
-.workspace-avatar { width: 31px; height: 31px; display: grid; place-items: center; border-radius: 8px; color: white; background: linear-gradient(140deg, #8b77ed, #6356cc); font-size: 14px; font-weight: 700; }
-.workspace-switcher > span:nth-child(2) { display: grid; gap: 2px; flex: 1; min-width: 0; }
-.workspace-switcher strong { font-size: 11.5px; font-weight: 600; }
-.workspace-switcher small { color: var(--sidebar-muted); font-size: 10.5px; }
-.workspace-switcher > svg { color: #9698aa; }
-.nav-section-label { padding: 0 11px; margin: 0 0 9px; color: #7e8094; font-size: 9px; font-weight: 700; letter-spacing: 1.15px; }
+.nav-section-label { padding: 0 11px; margin: 30px 0 9px; color: #7e8094; font-size: 9px; font-weight: 700; letter-spacing: 1.15px; }
 .primary-nav { display: grid; gap: 4px; }
 .nav-item { display: flex; align-items: center; gap: 11px; min-height: 39px; padding: 0 11px; border-radius: 7px; color: #b1b2c2; font-size: 12.5px; font-weight: 480; text-decoration: none; transition: background .16s ease, color .16s ease; }
 .nav-item:hover { background: #222336; color: white; }
@@ -59,13 +53,6 @@ a { color: inherit; }
 .nav-item-active > svg { color: #aca4ff; }
 .nav-new { margin-left: auto; padding: 2px 5px; border-radius: 4px; color: #c8c2ff; background: #373455; font-size: 8px; font-weight: 700; letter-spacing: .3px; }
 .sidebar-bottom { margin-top: auto; }
-.help-card { padding: 13px 12px 12px; border: 1px solid #353548; border-radius: 9px; background: #202133; }
-.help-card > span { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 7px; margin-bottom: 10px; color: #c3baff; background: #373455; }
-.help-card strong { display: block; font-size: 11.5px; }
-.help-card p { margin: 5px 0 11px; color: #a0a2b4; font-size: 10.5px; line-height: 1.5; }
-.help-card button, .sidebar-help-link { display: flex; align-items: center; gap: 7px; color: #d1ceff; background: none; border: 0; cursor: pointer; font-size: 10.5px; font-weight: 600; padding: 0; }
-.sidebar-help-link { min-height: 43px; width: 100%; color: #aeb0c0; border-bottom: 1px solid #343548; font-size: 11.5px; }
-.sidebar-help-link > svg:last-child { margin-left: auto; }
 .sidebar-user { display: flex; align-items: center; gap: 9px; padding: 13px 2px 2px; }
 .sidebar-user > span:nth-child(2) { display: grid; flex: 1; min-width: 0; gap: 3px; }
 .sidebar-user strong { font-size: 11px; font-weight: 600; }

@@ -10,6 +10,15 @@ afterEach(() => {
 })
 
 describe('PulseBoard application', () => {
+  it('keeps the sidebar focused on navigation and account controls', () => {
+    render(<App />)
+
+    expect(screen.queryByText('About this demo')).toBeNull()
+    expect(screen.queryByText('Northstar Studio')).toBeNull()
+    expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeTruthy()
+    expect(screen.getByRole('button', { name: 'Open settings' })).toBeTruthy()
+  })
+
   it('navigates between workspace pages without reloading', async () => {
     const user = userEvent.setup()
     render(<App />)
